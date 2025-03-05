@@ -1,0 +1,30 @@
+
+services:
+  db:
+    container_name: db_postgres
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DB_Name}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    container_name: app
+    build: .
+    restart: always
+    command: bash -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  postgres_test_data:
