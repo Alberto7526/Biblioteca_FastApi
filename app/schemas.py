@@ -15,7 +15,17 @@ class SchemaAuthorResponse(BaseModel):
     full_name: str
     date_created: datetime
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "id": 1,
+                    "date_created": "2021-08-02T00:00:00",
+                    "full_name": "Gabriel García Márquez",
+                }
+            ]
+        }
+    }
 
 
 class SchemaBook(BaseModel):
@@ -24,7 +34,18 @@ class SchemaBook(BaseModel):
     ISBN: str
     date_published: date | None = None
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "title": "Cien años de soledad",
+                    "author_id": 1,
+                    "ISBN": "978-3-16-148410-0",
+                    "date_published": "1967-05-30",
+                }
+            ]
+        }
+    }
 
 
 class SchemaBookResponse(BaseModel):
@@ -35,4 +56,17 @@ class SchemaBookResponse(BaseModel):
     ISBN: str
     date_published: date | None = None
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "id": 1,
+                    "date_created": "2021-08-02T00:00:00",
+                    "title": "Cien años de soledad",
+                    "author_id": 1,
+                    "ISBN": "978-3-16-148410-0",
+                    "date_published": "1967-05-30",
+                }
+            ]
+        }
+    }
